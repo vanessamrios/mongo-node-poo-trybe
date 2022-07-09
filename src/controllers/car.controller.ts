@@ -1,5 +1,7 @@
+import { Error } from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
 import ICarService from '../services/interfaces/car.service';
+
 // import ICarController from './intefaces/car.controller';
 
 export default class CarController {
@@ -12,7 +14,6 @@ export default class CarController {
   public async create(
     req: Request,
     res: Response,
-    next: NextFunction,
   ): Promise<Response | void> {
     try {
       const { model, year, color, buyValue, seatsQty, doorsQty } = req.body;
@@ -21,7 +22,9 @@ export default class CarController {
       });
       return res.status(201).json(carCreated);
     } catch (error) {
-      next(error);
+      if (error instanceof Error.ValidationError) {
+        return res.status(400).json({ message: error.message });
+      }
     }
   }
 

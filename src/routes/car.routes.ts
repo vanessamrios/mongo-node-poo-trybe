@@ -10,7 +10,7 @@ const carModel = new CarModel(carMongooseModel);
 const carService = new CarService(carModel);
 const carController = new CarController(carService);
 
-carRoutes.post('/cars', (req, res, next) => 
-  carController.create(req, res, next));
+carRoutes.post('/cars', (req, res) => 
+  carController.create(req, res));
 
 export default carRoutes;
