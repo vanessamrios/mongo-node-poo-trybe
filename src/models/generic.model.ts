@@ -1,4 +1,5 @@
 import { isValidObjectId, Model } from 'mongoose';
+import InvalidIdError from '../errors/invalidId.error';
 import { Model as IGenericModel } from '../interfaces/ModelInterface';
 
 export default abstract class GenericModel<T> implements IGenericModel<T> {
@@ -18,8 +19,11 @@ export default abstract class GenericModel<T> implements IGenericModel<T> {
     return allCars;
   }
 
+  // para checar o hexstring do Id, o mongoose disponibiliza a partir da versão 6.2.5 a função isValidObjectId()
   async readOne(id: string): Promise<T | null> {
-    if (!isValidObjectId(id)) return null;
+    if (id.length < 24) {
+      throw new InvalidIdError('Id must have 24 hexadecimal characters');
+    }
     const car = await this._modelMongoose.findById(id);
     return car;
   }

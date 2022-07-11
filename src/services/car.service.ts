@@ -1,6 +1,7 @@
 import ICarService from './interfaces/car.service';
 import { Car } from '../interfaces/CarInterface';
 import { Model as IGenericModel } from '../interfaces/ModelInterface';
+import NotFoundError from '../errors/notFound.error';
 
 const message = 'car not found';
 
@@ -23,7 +24,7 @@ export default class CarService implements ICarService {
 
   async readOne(id: string): Promise<Car> {
     const car = await this._carModel.readOne(id);
-    if (!car) throw new Error(message);
+    if (!car) throw new NotFoundError(message);
     return car;
   }
   // criar middleware de erro
