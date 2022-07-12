@@ -29,9 +29,12 @@ export default abstract class GenericModel<T> implements IGenericModel<T> {
   }
 
   async update(id: string, obj: T): Promise<T | null> {
-    if (!isValidObjectId(id)) return null;
+    if (id.length < 24) {
+      throw new InvalidIdError('Id must have 24 hexadecimal characters');
+    }
     const updatedCar = await this._modelMongoose
       .findOneAndUpdate({ _id: id }, obj, { returnOriginal: false });
+    console.log(updatedCar);
     return updatedCar;
   }
 

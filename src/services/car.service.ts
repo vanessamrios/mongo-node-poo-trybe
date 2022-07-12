@@ -3,7 +3,7 @@ import { Car } from '../interfaces/CarInterface';
 import { Model as IGenericModel } from '../interfaces/ModelInterface';
 import NotFoundError from '../errors/notFound.error';
 
-const message = 'car not found';
+const message = 'Object not found';
 
 export default class CarService implements ICarService {
   private _carModel: IGenericModel<Car>;
@@ -27,11 +27,10 @@ export default class CarService implements ICarService {
     if (!car) throw new NotFoundError(message);
     return car;
   }
-  // criar middleware de erro
 
   async update(id: string, obj: Car): Promise<Car> {
     const updatedCar = await this._carModel.update(id, obj);
-    if (!updatedCar) throw new Error(message);
+    if (!updatedCar) throw new NotFoundError(message);
     return updatedCar;
   }
 

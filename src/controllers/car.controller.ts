@@ -1,10 +1,6 @@
 import { Error as ValidationError } from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
 import ICarService from '../services/interfaces/car.service';
-import NotFoundError from '../errors/notFound.error';
-import InvalidIdError from '../errors/invalidId.error';
-
-// import ICarController from './intefaces/car.controller';
 
 export default class CarController {
   private _carSercvice: ICarService;
@@ -46,18 +42,14 @@ export default class CarController {
   public async readOne(
     req: Request,
     res: Response,
+    next: NextFunction,
   ): Promise<Response | void> {
     try {
       const { id } = req.params;
       const car = await this._carSercvice.readOne(id);
       return res.status(200).json(car);
     } catch (error) {
-      if (error instanceof InvalidIdError) {
-        return res.status(400).json({ error: error.message });
-      }
-      if (error instanceof NotFoundError) {
-        return res.status(404).json({ error: 'Object not found' });
-      }
+      next(error);
     }
   }
 
@@ -67,6 +59,7 @@ export default class CarController {
     next: NextFunction,
   ): Promise<Response | void> {
     try {
+      if (!req.body) { return res.status(400).json(); }
       const { id } = req.params;
       const { model, year, color, buyValue, seatsQty, doorsQty } = req.body;
       const updatedCar = await this._carSercvice.update(id, {
