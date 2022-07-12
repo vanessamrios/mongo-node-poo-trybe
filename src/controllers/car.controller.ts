@@ -59,7 +59,8 @@ export default class CarController {
     next: NextFunction,
   ): Promise<Response | void> {
     try {
-      if (!req.body) { return res.status(400).json(); }
+      if (!Object.keys(req.body).length) { return res.status(400).json(); }
+
       const { id } = req.params;
       const { model, year, color, buyValue, seatsQty, doorsQty } = req.body;
       const updatedCar = await this._carSercvice.update(id, {

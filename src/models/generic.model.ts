@@ -34,7 +34,7 @@ export default abstract class GenericModel<T> implements IGenericModel<T> {
     }
     const updatedCar = await this._modelMongoose
       .findOneAndUpdate({ _id: id }, obj, { returnOriginal: false });
-    console.log(updatedCar);
+
     return updatedCar;
   }
 

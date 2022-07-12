@@ -45,7 +45,7 @@ const carSchema = new Schema<Car>({
     min: 2,
     max: 7,
   },
-});
+}, { versionKey: false });
 
 const carMongooseModel = model<Car>('cars', carSchema);
 
