@@ -34,18 +34,18 @@ describe('Test the service layer', () => {
       });
     });
 
-    // describe('Test the endpoint get /cars in model', () => {
-    //   it('Test if the read function was called', async () => {
-    //     const carModel = new CarModel(modelMock);
-    //     await carModel.read();
-    //     Sinon.assert.called(findMock);
-    //   });
+    describe('Test the endpoint get /cars in service', () => {
+      it('Test if the read function was called', async () => {
+        const carModel = new CarService(modelMock);
+        await carModel.read();
+        Sinon.assert.called(readMock);
+      });
     
-    //   it('Test if the readOne function was called', async () => {
-    //     const carModel = new CarModel(modelMock);
-    //     await carModel.readOne(mockCarId);
-    //     Sinon.assert.called(findByIdMock);
-    //   });
-    // });
+      // it('Test if the readOne function was called', async () => {
+      //   const carModel = new CarService(modelMock);
+      //   await carModel.readOne(mockCarId);
+      //   Sinon.assert.called(readOneMock);
+      // });
+    });
 });
 
