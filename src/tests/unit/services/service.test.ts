@@ -28,16 +28,16 @@ const validCar = {
 describe('Test the service layer', () => {
     describe('Test the endpoint post /cars in service', () => {
       it('Test if the create function was called', async () => {
-        const carModel = new CarService(modelMock);
-        await carModel.create(validCar);
+        const carService = new CarService(modelMock);
+        await carService.create(validCar);
         Sinon.assert.called(createMock)
       });
     });
 
     describe('Test the endpoint get /cars in service', () => {
       it('Test if the read function was called', async () => {
-        const carModel = new CarService(modelMock);
-        await carModel.read();
+        const carService = new CarService(modelMock);
+        await carService.read();
         Sinon.assert.called(readMock);
       });
     
